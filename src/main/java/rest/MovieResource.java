@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import entities.Movie;
 import utils.EMF_Creator;
 import facades.MovieFacade;
+import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -17,7 +18,7 @@ import javax.ws.rs.core.MediaType;
 
 //Todo Remove or change relevant parts before ACTUAL use
 @Path("xxx")
-public class RenameMeResource {
+public class MovieResource {
 
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory(
                 "pu",
@@ -29,7 +30,7 @@ public class RenameMeResource {
     //An alternative way to get the EntityManagerFactory, whithout having to type the details all over the code
     //EMF = EMF_Creator.createEntityManagerFactory(DbSelector.DEV, Strategy.CREATE);
     
-    private static final MovieFacade FACADE =  MovieFacade.getMovieFacade(EMF);
+    private static final MovieFacade FACADE =  MovieFacade.getFacadeExample(EMF);
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
             
     @GET
@@ -44,6 +45,24 @@ public class RenameMeResource {
         long count = FACADE.getMovieCount();
         //System.out.println("--------------->"+count);
         return "{\"count\":"+count+"}";  //Done manually so no need for a DTO
+    }
+    
+    @GET
+    @Path("/all")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getAll() {
+        MovieFacade mf = new MovieFacade();
+        List<Movie> movieList = mf.getAllMovies();
+        return new Gson().toJson(movieList);
+    }
+    
+    @GET
+    @Path("/title/{name}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getMovieOnName(@PathParam("name") String name) {
+        MovieFacade mf = new MovieFacade();
+        List<Movie> movieList = mf.getMovieByName(name);
+        return new Gson().toJson(movieList);
     }
 
  

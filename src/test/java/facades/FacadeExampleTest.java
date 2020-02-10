@@ -10,18 +10,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import utils.Settings;
 import utils.EMF_Creator.DbSelector;
 import utils.EMF_Creator.Strategy;
 
 //Uncomment the line below, to temporarily disable this test
 //@Disabled
-public class MovieFacadeTest {
+public class FacadeExampleTest {
 
     private static EntityManagerFactory emf;
     private static MovieFacade facade;
 
-    public MovieFacadeTest() {
+    public FacadeExampleTest() {
     }
 
     //@BeforeAll
@@ -32,7 +31,7 @@ public class MovieFacadeTest {
                 "dev",
                 "ax2",
                 EMF_Creator.Strategy.CREATE);
-        facade = MovieFacade.getMovieFacade(emf);
+        facade = MovieFacade.getFacadeExample(emf);
     }
 
     /*   **** HINT **** 
@@ -44,7 +43,7 @@ public class MovieFacadeTest {
     @BeforeAll
     public static void setUpClassV2() {
        emf = EMF_Creator.createEntityManagerFactory(DbSelector.TEST,Strategy.DROP_AND_CREATE);
-       facade = MovieFacade.getMovieFacade(emf);
+       facade = MovieFacade.getFacadeExample(emf);
     }
 
     @AfterAll
@@ -60,8 +59,8 @@ public class MovieFacadeTest {
         try {
             em.getTransaction().begin();
             em.createNamedQuery("Movie.deleteAllRows").executeUpdate();
-            em.persist(new Movie("Some txt", "More text"));
-            em.persist(new Movie("aaa", "bbb"));
+            em.persist(new Movie(1987, "Yepper", new String[]{"Henning, Kurt"}));
+            em.persist(new Movie(1999, "Goodie", new String[]{"Ryan"}));
 
             em.getTransaction().commit();
         } finally {

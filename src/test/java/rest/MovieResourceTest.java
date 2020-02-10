@@ -65,8 +65,8 @@ public class MovieResourceTest {
     @BeforeEach
     public void setUp() {
         EntityManager em = emf.createEntityManager();
-        r1 = new Movie("Some txt","More text");
-        r2 = new Movie("aaa","bbb");
+        r1 = new Movie(1987, "Yepper", new String[]{"Henning, Kurt"});
+        r2 = new Movie(1999, "Goodie", new String[]{"Ryan"});
         try {
             em.getTransaction().begin();
             em.createNamedQuery("Movie.deleteAllRows").executeUpdate();
