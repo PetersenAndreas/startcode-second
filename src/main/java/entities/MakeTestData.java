@@ -30,9 +30,9 @@ public class MakeTestData {
  
     public static void main(String[] args) {
         
-        Movie movie1 = new Movie(1987, "Yepper", new String[]{"Henning, Kurt"});
+        Movie movie1 = new Movie(1987, "Yepper", new String[]{"Henning", "Kurt"});
         Movie movie2 = new Movie(1999, "Goodie", new String[]{"Ryan"});
-        Movie movie3 = new Movie(2020, "HeyHey", new String[]{"Nina, Knud, Bjarne"});
+        Movie movie3 = new Movie(2020, "HeyHey", new String[]{"Nina", "Knud", "Bjarne"});
         mf.addMovie(movie1);
         mf.addMovie(movie2);
         mf.addMovie(movie3);

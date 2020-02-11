@@ -65,7 +65,7 @@ public class MovieResourceTest {
     @BeforeEach
     public void setUp() {
         EntityManager em = emf.createEntityManager();
-        r1 = new Movie(1987, "Yepper", new String[]{"Henning, Kurt"});
+        r1 = new Movie(1987, "Yepper", new String[]{"Henning", "Kurt"});
         r2 = new Movie(1999, "Goodie", new String[]{"Ryan"});
         try {
             em.getTransaction().begin();
