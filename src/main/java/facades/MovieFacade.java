@@ -82,4 +82,14 @@ public class MovieFacade {
         }
     }
 
+    public Movie getMovieByID(Long id) {
+        EntityManager em = getEntityManager();
+        try {
+            Movie m = em.find(Movie.class, id);
+            return m;
+        } finally {
+            em.close();
+        }
+    }
+
 }

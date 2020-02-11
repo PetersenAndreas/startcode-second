@@ -64,6 +64,15 @@ public class MovieResource {
         List<Movie> movieList = mf.getMovieByName(name);
         return new Gson().toJson(movieList);
     }
+    
+    @GET
+    @Path("/id/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getEmployeeOnId(@PathParam("id") Long id) {
+        MovieFacade mf = new MovieFacade();
+        Movie m = mf.getMovieByID(id);
+        return new Gson().toJson(m);
+    }
 
  
 }

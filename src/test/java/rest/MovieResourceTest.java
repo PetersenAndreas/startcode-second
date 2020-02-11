@@ -14,6 +14,7 @@ import org.glassfish.grizzly.http.util.HttpStatus;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItem;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -66,7 +67,7 @@ public class MovieResourceTest {
     public void setUp() {
         EntityManager em = emf.createEntityManager();
         r1 = new Movie(1987, "Yepper", new String[]{"Henning", "Kurt"});
-        r2 = new Movie(1999, "Goodie", new String[]{"Ryan"});
+        r2 = new Movie(1999, "Goodie", new String[]{"Ryan", "Kurt"});
         try {
             em.getTransaction().begin();
             em.createNamedQuery("Movie.deleteAllRows").executeUpdate();
@@ -103,5 +104,36 @@ public class MovieResourceTest {
         .assertThat()
         .statusCode(HttpStatus.OK_200.getStatusCode())
         .body("count", equalTo(2));   
+    }
+    
+    @Test
+    public void testAllActorsInBody() throws Exception {
+        given()
+        .contentType("application/json")
+        .get("/movie/all").then()
+        .assertThat()
+        .statusCode(HttpStatus.OK_200.getStatusCode())
+        .body("[0].actors", hasItem("Kurt"));  
+                
+    }
+
+    @Test
+    public void testName() throws Exception {
+        given()
+        .contentType("application/json")
+        .get("movie/title/" + r1.getName()).then()
+        .assertThat()
+        .statusCode(HttpStatus.OK_200.getStatusCode())
+        .body("[0].name", equalTo(r1.getName()));
+    }
+    
+    @Test
+    public void testId() throws Exception {
+        given()
+        .contentType("application/json")
+        .get("movie/id/" + r1.getId()).then()
+        .assertThat()
+        .statusCode(HttpStatus.OK_200.getStatusCode())
+        .body("id", equalTo(Integer.parseInt(String.valueOf(r1.getId()))));
     }
 }
